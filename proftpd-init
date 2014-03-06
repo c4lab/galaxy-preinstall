@@ -1,4 +1,6 @@
 #!/bin/sh
+# chkconfig: 2345 98 20
+# description: ProFTPD init script
 
 # ProFTPD files
 FTPD_BIN=/usr/local/sbin/proftpd
