@@ -7,12 +7,12 @@
 # http://goo.gl/qkW7aQ
 
 
-if [[ ! -d torque-4.2.7 ]]; then
-  curl -o torque-4.2.7.tar.gz -L http://www.adaptivecomputing.com/index.php?wpfb_dl=2420
-  tar xf torque-4.2.7.tar.gz
+if [[ ! -d torque-2.5.13 ]]; then
+  curl -o torque-2.5.13.tar.gz -L http://www.adaptivecomputing.com/index.php?wpfb_dl=1643
+  tar xf torque-2.5.13.tar.gz
 fi
 
-cd torque-4.2.7
+cd torque-2.5.13
 ./configure
 make
 
@@ -22,8 +22,7 @@ export PATH=/usr/local/sbin:/usr/local/bin:$PATH
 pkill pbs
 rm -rf /var/spool/torque/
 make install
-cp contrib/init.d/trqauthd /etc/init.d/trqauthd
-chkconfig --add trqauthd
+unalias cp
 cp contrib/init.d/pbs_mom /etc/init.d/pbs_mom
 chkconfig --add pbs_mom
 cp contrib/init.d/pbs_server /etc/init.d/pbs_server
