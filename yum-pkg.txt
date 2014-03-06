@@ -12,7 +12,6 @@ openssl-devel
 postgresql
 postgresql-devel
 postgresql-server
-proftpd
 python-devel
 R
 tmux
