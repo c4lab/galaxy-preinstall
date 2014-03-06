@@ -5,6 +5,8 @@
 # Adaptive computing installation guide:
 # http://goo.gl/qkW7aQ
 
+export PATH=/usr/local/sbin:/usr/local/bin:$PATH
+
 if [[ ! -d torque-4.2.7 ]]; then
   curl -o torque-4.2.7.tar.gz -L http://www.adaptivecomputing.com/index.php?wpfb_dl=2420
   tar xf torque-4.2.7.tar.gz
@@ -13,11 +15,8 @@ fi
 cd torque-4.2.7
 ./configure
 make
-
-# Run as root
-sudo su
-export PATH=/usr/local/sbin:/usr/local/bin:$PATH
 make install
+
 cp contrib/init.d/trqauthd /etc/init.d/trqauthd
 chkconfig --add trqauthd
 cp contrib/init.d/pbs_mom /etc/init.d/pbs_mom
@@ -34,9 +33,9 @@ echo $(hostname) >/var/spool/torque/server_name
 
 ./torque.setup root
 
-/usr/local/bin/qmgr -c "create node $(hostname) np=$(nproc)"
-/usr/local/bin/qmgr -c 'unset queue batch resources_default.walltime'
-/usr/local/bin/qterm
+qmgr -c "create node $(hostname) np=$(nproc)"
+qmgr -c 'unset queue batch resources_default.walltime'
+qterm
 service pbs_server start
 service pbs_mom start
 service pbs_sched start
