@@ -13,6 +13,10 @@ make
 # Run as root
 sudo su
 make install
+mkdir -p /var/log/proftpd
+chmod 700 /var/log/proftpd
+curl https://raw.github.com/jlhg/galaxy-preinstall/master/proftpd-galaxy.conf -o /etc/init.d/proftpd
+chmod 640 /usr/local/etc/proftpd.conf
 curl https://raw.github.com/jlhg/galaxy-preinstall/master/proftpd-init -o /etc/init.d/proftpd
 chmod 555 /etc/init.d/proftpd
 chkconfig --add proftpd
