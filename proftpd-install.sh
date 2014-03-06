@@ -12,7 +12,6 @@ make
 
 # Run as root
 sudo su
-unalias cp
 make install
 curl https://raw.github.com/jlhg/galaxy-preinstall/master/proftpd-init -o /etc/init.d/proftpd
 chmod 555 /etc/init.d/proftpd
