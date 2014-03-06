@@ -36,7 +36,7 @@ ldconfig
 service trqauthd start
 echo $(hostname) >/var/spool/torque/server_name
 
-./torque.setup root
+yes |./torque.setup root
 
 qmgr -c "create node $(hostname) np=$(nproc)"
 qmgr -c 'unset queue batch resources_default.walltime'
