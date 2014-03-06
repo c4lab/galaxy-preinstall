@@ -16,3 +16,4 @@ make install
 curl https://raw.github.com/jlhg/galaxy-preinstall/master/proftpd-init -o /etc/init.d/proftpd
 chmod 555 /etc/init.d/proftpd
 chkconfig --add proftpd
+chkconfig proftpd on
