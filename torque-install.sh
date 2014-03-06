@@ -1,11 +1,11 @@
 #!/bin/bash
 #
 # This script is for RHEL distribution
+# This script will remove the installed torque.
 #
 # Adaptive computing installation guide:
 # http://goo.gl/qkW7aQ
 
-export PATH=/usr/local/sbin:/usr/local/bin:$PATH
 
 if [[ ! -d torque-4.2.7 ]]; then
   curl -o torque-4.2.7.tar.gz -L http://www.adaptivecomputing.com/index.php?wpfb_dl=2420
@@ -15,8 +15,13 @@ fi
 cd torque-4.2.7
 ./configure
 make
-make install
 
+# Run as root
+sudo su
+export PATH=/usr/local/sbin:/usr/local/bin:$PATH
+pkill pbs
+rm -rf /var/spool/torque/
+make install
 cp contrib/init.d/trqauthd /etc/init.d/trqauthd
 chkconfig --add trqauthd
 cp contrib/init.d/pbs_mom /etc/init.d/pbs_mom
