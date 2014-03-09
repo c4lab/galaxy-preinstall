@@ -20,3 +20,4 @@ xorg-x11-xauth
 zlib-devel
 perlbrew
 python-virtualenv
+expect
