@@ -24,3 +24,4 @@ zlib-devel
 perlbrew
 python-virtualenv
 expect
+libtool
