@@ -13,6 +13,8 @@ postgresql
 postgresql-devel
 postgresql-server
 python-devel
+cairo-devel
+pango-devel
 R
 tmux
 xclip
