@@ -18,7 +18,7 @@ SERVICE_NAME="Galaxy"
 ROOT="/home/galaxy"
 RUN_AS="galaxy"
 RUN_IN="$ROOT/dist"
-PYENV="$ROOT/pyenv/bin"
+PYENV="$ROOT/venv/bin"
 DATE=`date +"%Y%m%d"`
 
 #--- main actions
