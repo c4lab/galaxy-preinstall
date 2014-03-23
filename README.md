@@ -5,10 +5,10 @@ Add extra repositories:
 
 ```
 $ curl https://raw.github.com/jlhg/galaxy-preinstall/master/add_extra_repo.sh |sudo bash
-
+$ sudo yum install yum-priorities
 ```
 
-After installing `yum-priorities`, set the priorities of CentOS-Base and EPEL repos:
+Set the priorities of CentOS-Base and EPEL repos:
 
 * Add `priority=1` to each section in `/etc/yum.repos.d/CentOS-Base.repo`.
 
