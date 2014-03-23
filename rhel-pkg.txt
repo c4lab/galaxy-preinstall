@@ -25,3 +25,4 @@ perlbrew
 python-virtualenv
 expect
 libtool
+yum-priorities
