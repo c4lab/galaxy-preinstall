@@ -15,16 +15,17 @@
 #--- config
 
 SERVICE_NAME="Galaxy"
-ROOT="/home/galaxy"
-RUN_AS="galaxy"
-RUN_IN="$ROOT/galaxy-dist"
-DATE=`date +"%Y%m%d"`
+ROOT=/home/galaxy
+PROFILE=$ROOT/.bash_profile
+RUN_AS=galaxy
+RUN_IN=$ROOT/galaxy-dist
+DATE=$(date +"%Y%m%d")
 
 #--- main actions
 
 start() {
   echo "Starting $SERVICE_NAME... "
-  cmd="cd $RUN_IN && sh run.sh --daemon --log-file $ROOT/log/${DATE}.log"
+  cmd="cd $RUN_IN && . $PROFILE && bash run.sh --daemon --log-file $ROOT/log/${DATE}.log"
   case "$(id -un)" in
 	$RUN_AS)
 	  eval "$cmd"
@@ -42,7 +43,7 @@ start() {
 stop() {
   echo -n "Stopping $SERVICE_NAME... "
 
-  cmd="cd $RUN_IN && sh run.sh --stop-daemon"
+  cmd="cd $RUN_IN && bash run.sh --stop-daemon"
 
   case "$(id -un)" in
 	$RUN_AS)
