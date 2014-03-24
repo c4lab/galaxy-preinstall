@@ -24,7 +24,7 @@ start() {
 	cmd="cd $RUN_IN && sh run.sh --daemon --log-file=$GALAXY_LOG"
 	case "$(id -un)" in
 		$RUN_AS)
-			eval ". $GALAXY_ENV"
+			. $GALAXY_ENV
 			eval "$cmd"
 			;;
 		root)
@@ -44,7 +44,7 @@ stop() {
 
 	case "$(id -un)" in
 		$RUN_AS)
-			eval ". $GALAXY_ENV"
+			. $GALAXY_ENV
 			eval "$cmd"
 			;;
 		root)
