@@ -1,0 +1,8 @@
+/home/galaxy/galaxy-dist/logs/galaxy.log {
+    weekly
+    rotate 8
+    copytruncate
+    compress
+    missingok
+    notifempty
+}
