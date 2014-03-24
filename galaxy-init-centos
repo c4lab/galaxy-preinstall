@@ -8,105 +8,103 @@
 # chkconfig: 2345 98 20
 # description: Galaxy http://galaxyproject.org/
 
-# Usage:
-# 1. Modify the config variables
-# 2. Copy this file to /etc/init.d/galaxy
-
 #--- config
 
-SERVICE_NAME="Galaxy"
-ROOT=/home/galaxy
-PROFILE=$ROOT/.bash_profile
-RUN_AS=galaxy
-RUN_IN=$ROOT/galaxy-dist
-DATE=$(date +"%Y%m%d")
+SERVICE_NAME="galaxy"
+RUN_AS="galaxy"
+RUN_IN="/home/galaxy/galaxy-dist"
+
+GALAXY_ENV="/home/galaxy/.pyenv/versions/virtualenv-galaxy/bin/activate"
+GALAXY_LOG="/home/galaxy/galaxy-dist/logs/galaxy.log"
 
 #--- main actions
 
 start() {
-  echo "Starting $SERVICE_NAME... "
-  cmd="cd $RUN_IN && . $PROFILE && bash run.sh --daemon --log-file $ROOT/log/${DATE}.log"
-  case "$(id -un)" in
-	$RUN_AS)
-	  eval "$cmd"
-	  ;;
-	root)
-	  su - $RUN_AS -c "$cmd"
-	  ;;
-	*)
-	  echo "*** ERROR *** must be $RUN_AS or root in order to control this service" >&2
-	  exit 1
-  esac
-  echo "...done."
+	echo "Starting $SERVICE_NAME... "
+	cmd="cd $RUN_IN && sh run.sh --daemon --log-file=$GALAXY_LOG"
+	case "$(id -un)" in
+		$RUN_AS)
+			eval ". $GALAXY_ENV"
+			eval "$cmd"
+			;;
+		root)
+			su - $RUN_AS -c "$cmd"
+			;;
+		*)
+			echo "*** ERROR *** must be $RUN_AS or root in order to control this service" >&2
+			exit 1
+	esac
+	echo "...done."
 }
 
 stop() {
-  echo -n "Stopping $SERVICE_NAME... "
+	echo -n "Stopping $SERVICE_NAME... "
+	
+	cmd="cd $RUN_IN && sh run.sh --stop-daemon"
 
-  cmd="cd $RUN_IN && bash run.sh --stop-daemon"
-
-  case "$(id -un)" in
-	$RUN_AS)
-	  eval "$cmd"
-	  ;;
-	root)
-	  su - $RUN_AS -c "$cmd"
-	  ;;
-	*)
-	  echo "*** ERROR *** must be $RUN_AS or root in order to control this service" >&2
-	  exit 1
-  esac
-
-  echo "done."
+	case "$(id -un)" in
+		$RUN_AS)
+			eval ". $GALAXY_ENV"
+			eval "$cmd"
+			;;
+		root)
+			su - $RUN_AS -c "$cmd"
+			;;
+		*)
+			echo "*** ERROR *** must be $RUN_AS or root in order to control this service" >&2
+			exit 1
+	esac
+	
+	echo "done."
 }
 
 status() {
-  echo -n "$SERVICE_NAME status: "
-
-  while read pid; do
-	if [ "$(readlink -m /proc/$pid/cwd)" = "$(readlink -m $RUN_IN)" ]; then
-	  echo "started"
-	  return 0
-	fi
-  done < <(ps ax -o 'pid cmd' | grep -P '^\s*\d+ python ./scripts/paster.py serve' | awk '{print $1}')
-  echo "stopped"
-  return 3
+	echo -n "$SERVICE_NAME status: "
+	
+	while read pid; do
+		if [ "$(readlink -m /proc/$pid/cwd)" = "$(readlink -m $RUN_IN)" ]; then
+			echo "started"
+			return 0
+		fi
+	done < <(ps ax -o 'pid cmd' | grep -P '^\s*\d+ python ./scripts/paster.py serve' | awk '{print $1}')
+	echo "stopped"
+	return 3
 }
 
 notsupported() {
-  echo "*** ERROR*** $SERVICE_NAME: operation [$1] not supported"
+	echo "*** ERROR*** $SERVICE_NAME: operation [$1] not supported"
 }
 
 usage() {
-  echo "Usage: $SERVICE_NAME start|stop|restart|status"
+	echo "Usage: $SERVICE_NAME start|stop|restart|status"
 }
 
 
 #---
 
 case "$1" in
-  start)
-	start "$@"
-	;;
-  stop)
-	stop
-	;;
-  restart|reload)
-	stop
-	start
-	;;
-  status)
-	set +e
-	status
-	exit $?
-	;;
-  '')
-	usage >&2
-	exit 1
-	;;
-  *)
-	notsupported "$1" >&2
-	usage >&2
-	exit 1
-	;;
+	start)
+		start "$@"
+		;;
+	stop)
+		stop
+		;;
+	restart|reload)
+		stop
+		start
+		;;
+	status)
+		set +e
+		status
+		exit $?
+		;;
+	'')
+		usage >&2
+		exit 1
+		;;
+	*)
+		notsupported "$1" >&2
+		usage >&2
+		exit 1
+		;;
 esac
