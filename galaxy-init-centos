@@ -15,7 +15,7 @@ RUN_AS="galaxy"
 RUN_IN="/home/galaxy/galaxy-dist"
 
 GALAXY_ENV="/home/galaxy/.pyenv/versions/virtualenv-galaxy/bin/activate"
-GALAXY_LOG="/home/galaxy/galaxy-dist/logs/galaxy.log"
+GALAXY_LOG="/home/galaxy/logs/galaxy.log"
 
 #--- main actions
 
@@ -39,7 +39,7 @@ start() {
 
 stop() {
 	echo -n "Stopping $SERVICE_NAME... "
-	
+
 	cmd="cd $RUN_IN && sh run.sh --stop-daemon"
 
 	case "$(id -un)" in
@@ -54,13 +54,13 @@ stop() {
 			echo "*** ERROR *** must be $RUN_AS or root in order to control this service" >&2
 			exit 1
 	esac
-	
+
 	echo "done."
 }
 
 status() {
 	echo -n "$SERVICE_NAME status: "
-	
+
 	while read pid; do
 		if [ "$(readlink -m /proc/$pid/cwd)" = "$(readlink -m $RUN_IN)" ]; then
 			echo "started"

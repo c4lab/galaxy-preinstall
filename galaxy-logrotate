@@ -1,4 +1,4 @@
-/home/galaxy/galaxy-dist/logs/galaxy.log {
+/home/galaxy/logs/galaxy.log {
     weekly
     rotate 8
     copytruncate
