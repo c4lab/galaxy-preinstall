@@ -1,4 +1,5 @@
 /home/galaxy/logs/galaxy.log {
+    create 640 galaxy galaxy
     weekly
     rotate 8
     copytruncate
