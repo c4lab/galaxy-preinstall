@@ -1,28 +1,21 @@
 #!/bin/bash
 #
 # This script is for RHEL distribution
-# This script will remove the installed torque.
 #
 # Adaptive computing installation guide:
 # http://goo.gl/qkW7aQ
 
-
-if [[ ! -d torque-2.5.13 ]]; then
-  curl -o torque-2.5.13.tar.gz -L http://www.adaptivecomputing.com/index.php?wpfb_dl=1643
-  tar xf torque-2.5.13.tar.gz
-fi
-
-cd torque-2.5.13
+curl -o torque-4.2.7.tar.gz -L http://www.adaptivecomputing.com/index.php?wpfb_dl=2420
+tar xf torque-4.2.7.tar.gz
+cd torque-4.2.7
 ./configure
 make
 
 # Run as root
 sudo su
-export PATH=/usr/local/sbin:/usr/local/bin:$PATH
-pkill pbs
-rm -rf /var/spool/torque/
 make install
-unalias cp
+cp contrib/init.d/trqauthd /etc/init.d/trqauthd
+chkconfig --add trqauthd
 cp contrib/init.d/pbs_mom /etc/init.d/pbs_mom
 chkconfig --add pbs_mom
 cp contrib/init.d/pbs_server /etc/init.d/pbs_server
@@ -35,11 +28,11 @@ ldconfig
 service trqauthd start
 echo $(hostname) >/var/spool/torque/server_name
 
-yes |./torque.setup root
+./torque.setup root
 
-qmgr -c "create node $(hostname) np=$(nproc)"
-qmgr -c 'unset queue batch resources_default.walltime'
-qterm
+/usr/local/bin/qmgr -c "create node $(hostname) np=$(nproc)"
+/usr/local/bin/qmgr -c 'unset queue batch resources_default.walltime'
+/usr/local/bin/qterm
 service pbs_server start
 service pbs_mom start
 service pbs_sched start
