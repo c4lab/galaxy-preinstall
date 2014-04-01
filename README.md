@@ -4,13 +4,13 @@ RHEL
 Add extra repositories:
 
 ```
-$ curl https://raw.github.com/jlhg/galaxy-preinstall/master/add_extra_repo.sh |sudo bash
-$ sudo yum install yum-priorities
+$ sudo yum install yum-plugin-priorities
+$ curl https://raw.github.com/jlhg/galaxy-preinstall/master/add_extra_repo.sh | sudo bash
 ```
 
 Set the priorities of CentOS-Base and EPEL repos:
 
-* Add `priority=1` to each section in `/etc/yum.repos.d/CentOS-Base.repo`.
+* Add `priority=10` to each section in `/etc/yum.repos.d/CentOS-Base.repo`.
 
   E.g.
 
@@ -21,7 +21,7 @@ mirrorlist=http://mirrorlist.centos.org/?release=$releasever&arch=$basearch&repo
 #baseurl=http://mirror.centos.org/centos/$releasever/os/$basearch/
 gpgcheck=1
 gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-6
-priority=1
+priority=10
 
 #released updates
 [updates]
@@ -30,13 +30,13 @@ mirrorlist=http://mirrorlist.centos.org/?release=$releasever&arch=$basearch&repo
 #baseurl=http://mirror.centos.org/centos/$releasever/updates/$basearch/
 gpgcheck=1
 gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-6
-priority=1
+priority=10
 
 ...
 
 ```
 
-* Add `priority=10` to each section in `/etc/yum.repos.d/epel.repo`.
+* Add `priority=20` to each section in `/etc/yum.repos.d/epel.repo`.
 
 Update packages:
 
