@@ -16,7 +16,6 @@ postgresql-server
 python-devel
 cairo-devel
 pango-devel
-R
 tmux
 xclip
 xorg-x11-xauth
