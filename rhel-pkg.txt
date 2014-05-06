@@ -26,3 +26,4 @@ libtool
 proftpd
 proftpd-postgresql
 ack
+texlive
