@@ -28,3 +28,4 @@ proftpd-postgresql
 ack
 texlive-latex
 readline-devel
+sqlite-devel
