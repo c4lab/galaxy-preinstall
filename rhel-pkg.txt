@@ -29,3 +29,9 @@ ack
 texlive-latex
 readline-devel
 sqlite-devel
+readline
+readline-devel
+readline-static
+openssl-static
+bzip2-devel
+bzip2-libs
